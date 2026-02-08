@@ -15,17 +15,18 @@ source:
 build:
   number: 1
   noarch: python
-  script: ${{ PYTHON }} -m pip install . -vv
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   python:
     entry_points:
       - epdb = epdb.epdb_client:main
 
 requirements:
   host:
-    - python >=3.6
+    - python ${{ python_min }}.*
     - pip
+    - setuptools
   run:
-    - python >=3.6
+    - python >=${{ python_min }}
     - six
 
 tests:
@@ -33,8 +34,8 @@ tests:
       imports:
         - epdb
       pip_check: true
-
       python_version: ${{ python_min }}.*
+
 about:
   summary: Enhanced Python Debugger
   license: MIT
